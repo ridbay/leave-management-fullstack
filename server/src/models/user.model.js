@@ -1,9 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define("users", {
-    staff_id: {
+    id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+    },
+    staff_id:{
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
     },
     email: {
       type: Sequelize.STRING,
@@ -12,12 +17,9 @@ module.exports = (sequelize, Sequelize) => {
     },
     firstName: {
       type: Sequelize.STRING,
-      // allowNull: false,
-      defaultValue: "Ridwan",
     },
     lastName: {
       type: Sequelize.STRING,
-      // allowNull: false,
     },
     password: {
       type: Sequelize.STRING,
@@ -29,10 +31,19 @@ module.exports = (sequelize, Sequelize) => {
     },
     line_manager: {
       type: Sequelize.STRING,
-      // allowNull:false
+      defaultValue:"Ridwan"
     },
-    leave_balances: {
+    sickLeave: {
       type: Sequelize.INTEGER,
+      defaultValue:10
+    },
+    examLeave: {
+      type: Sequelize.INTEGER,
+      defaultValue:5
+    },
+    annualLeave: {
+      type: Sequelize.INTEGER,
+      defaultValue:20
     },
   });
   

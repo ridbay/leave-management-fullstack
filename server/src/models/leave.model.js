@@ -5,11 +5,19 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true,
     },
+    staff_id: {
+      type: Sequelize.STRING,
+    },
     email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    firstName: {
+      type: Sequelize.STRING,
+    },
+    lastName: {
+      type: Sequelize.STRING,
+    },
     type: {
       type: Sequelize.STRING,
     },
@@ -17,28 +25,30 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
     },
     date_requested: {
-      type: Sequelize.DATEONLY,
+      type: Sequelize.STRING,
     },
     date_approved: {
-      type: Sequelize.DATEONLY,
+      type: Sequelize.STRING,
     },
-    initial_leave: {
-      type: Sequelize.DATEONLY,
+    days: {
+      type: Sequelize.STRING,
     },
-    balance_leave: {
-      type: Sequelize.INTEGER,
+    initial_balance: {
+      type: Sequelize.STRING,
     },
-
+    final_balance: {
+      type: Sequelize.STRING,
+    },
     leave_start: {
-      type: Sequelize.DATEONLY,
+      type: Sequelize.STRING,
     },
 
     leave_end: {
-      type: Sequelize.DATEONLY,
+      type: Sequelize.STRING,
     },
 
     resumption: {
-      type: Sequelize.DATEONLY,
+      type: Sequelize.STRING,
     },
   });
 

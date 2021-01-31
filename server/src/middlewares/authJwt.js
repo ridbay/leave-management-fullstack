@@ -5,14 +5,14 @@ const User = model.user
 
 module.exports = (req, res, next) => {
 
-  let token = req.headers["x-access-token"];
+  let authHeader = req.headers.authorization;
 
-  if (!token) {
+  if (!authHeader) {
     return res.status(403).send({
       message: "No token provided!",
     });
   }
-
+const token = authHeader.split(" ")[1];
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({
@@ -20,6 +20,7 @@ module.exports = (req, res, next) => {
       });
     }
     req.userId = decoded.id;
+    req.email= decoded.email;
     next();
   });
 };

@@ -23,6 +23,10 @@ app.get("/", (req, res) => {
 //Require Users routes
 let userRoutes = require("./src/routes/user.route");
 userRoutes(app);
+//Require Leaves routes
+let leaveRoutes = require("./src/routes/leave.route");
+leaveRoutes(app);
+
 
 
 //To re-initialize the databse on every server start up
@@ -48,15 +52,27 @@ const moment = require("moment-timezone");
 const date = moment().tz("Africa/Lagos").format("MMM D YYYY");
 function initial() {
   User.create({
-    email:"test@test.com",
-    password:"1234567890",
+    email:"admin@test.com",
+    password:"password",
+    staff_id:"admin",
     type:"admin",
     firstName:"Ridwan",
     lastName:"Balogun",
     line_manager:"Nobody",
-    leave_balance: "304"
+  });
+  User.create({
+    email:"test2@test.com",
+    password:"1234567890",
+    staff_id:"test2",
+    type:"admin",
+    firstName:"Ridwan2",
+    lastName:"Balogun2",
+    line_manager:"Nobody2",
   });
   Leave.create({
+    firstName:"Ridwan",
+    lastName:"Balogun",
+    staff_id:"ridwan",
     email:"balogunridwan@gmail.com",
     type:"School",
     status:"approved",
@@ -64,6 +80,19 @@ function initial() {
     date_approved:"2021-01-29",
     initial_leave:"2021-01-29",
     balance_leave:304,
+    leave_start:"2021-01-29",
+    leave_end:"2021-01-29",
+    resumption:"2021-01-29"
+  });
+  Leave.create({
+    firstName:"Admin",
+    lastName:"Test",
+    email:"admin@gmail.com",
+    type:"annual",
+    status:"accepted",
+    date_requested: "2021-01-29",
+    date_approved:"2021-01-29",
+    initial_leave:"2021-01-29",
     leave_start:"2021-01-29",
     leave_end:"2021-01-29",
     resumption:"2021-01-29"

@@ -11,10 +11,16 @@ exports.signup = async (req, res) => {
   } else {
     try {
       const { firstName, lastName, staff_id, email, password, type } = req.body;
-      const findUser = await User.findOne({ where: { email: email } });
-      if (findUser) {
+      const findUserWithEmail = await User.findOne({ where: { email: email } });
+      if (findUserWithEmail) {
         res.status(400).send({
-          message: "Failed! User already exist!",
+          message: `Failed! User with ${email} already exist!`,
+        });
+      }
+      const findUserWithStaffID = await User.findOne({ where: { staff_id: staff_id } });
+      if (findUserWithStaffID ) {
+        res.status(400).send({
+          message: `Failed! User with ${staff_id} already exist!`,
         });
       }
 
@@ -60,6 +66,8 @@ exports.signin = async (req, res) => {
           message: "Authentication failed. User not found.",
         });
 
+        console.log("Saved password", user.password)
+        console.log("passed password", password)
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
         return res.status(400).json({
@@ -99,7 +107,8 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getOneUser = async (req, res) => {
   try {
-    const { email } = req.body;
+    const email = req.email;
+    console.log(email)
     const findUser = await User.findOne({ where: { email: email } });
     res.json({
       data: findUser,
@@ -111,10 +120,11 @@ exports.getOneUser = async (req, res) => {
   }
 };
 exports.updateUser = async (req, res) => {
-  const { firstName, email } = req.body;
+  const { firstName, lastName}= req.body;
+  const email= req.email
   try {
     const updateUser = await User.update(
-      { firstName: firstName },
+      { firstName: firstName,lastName: lastName  },
       { where: { email: email } }
     );
 
@@ -129,7 +139,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 exports.deleteUser = async (req, res) => {
-  const { email } = req.body;
+  const email = req.email;
   try {
     const deleteUse = await User.destroy({
       where: {
